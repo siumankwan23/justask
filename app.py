@@ -28,6 +28,12 @@ with st.sidebar:
     add_vertical_space(5)
     st.write('Made by [William Gillett](https://github.com/wmgillett/chat-pdf-langchain-faiss-streamlit)')
 
+    st.markdown('## Environment Variables')
+    openai_api_key = st.text_input("Enter OPENAI_API_KEY")
+    if openai_api_key:  # Check if the input is not empty
+        os.environ["OPENAI_API_KEY"] = openai_api_key  # Set the environment variable
+
+
 def main():
     st.write("Hello")
     st.header("Chat with PDF 💬")
