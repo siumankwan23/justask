@@ -25,8 +25,6 @@ with st.sidebar:
     - [FAISS](https://github.com/facebookresearch/faiss) vector store
  
     ''')
-    add_vertical_space(5)
-    st.write('Made by [William Gillett](https://github.com/wmgillett/chat-pdf-langchain-faiss-streamlit)')
 
     st.markdown('## Environment Variables')
     openai_api_key = st.text_input("Enter OPENAI_API_KEY")
