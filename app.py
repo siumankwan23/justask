@@ -32,82 +32,39 @@ with st.sidebar:
         os.environ["OPENAI_API_KEY"] = openai_api_key  # Set the environment variable
 
 
+import os
+import pickle
+import streamlit as st
+
+# Main function
 def main():
-    st.write("Hello")
-    st.header("Chat with PDF 💬")
-    # upload a PDF file
-    pdf = upload_pdf()
-    # check for pdf file
-    if pdf is not None:
-        # process text in pdf and convert to chunks
-        chuck_size = 500
-        chuck_overlap = 100
-        chunks = process_text(pdf, chuck_size, chuck_overlap)
-        vector_store = get_embeddings(chunks, pdf)
-        # ask the user for a question
-        question = st.text_input("Ask a question")
+    st.title("Embedding Loader and Question Answering")
+    
+    # Load embeddings
+    embeddings = get_embeddings()
+    if embeddings is None:
+        st.stop()
+
+    # Allow users to ask questions
+    question = st.text_input("Ask a question:")
+    if st.button("Submit"):
         if question:
+            # Process user question using the embeddings and provide a response
+            # response = process_question(question, embeddings)
             # get the docs related to the question
-            docs = retrieve_docs(question, vector_store)
+            docs = retrieve_docs(question, embeddings)
             response = generate_response(docs, question)
-            st.write(response)
+            st.write("Response:", response)
+        else:
+            st.warning("Please enter a question.")
 
-# upload a pdf file from website
-def upload_pdf():
-    pdf = st.file_uploader("Upload your PDF", type="pdf")
-    return pdf
-
-# convert the pdf to text chunks
-def process_text(pdf, chuck_size, chuck_overlap):
-    pdf_reader = PdfReader(pdf)
-    # extract the text from the PDF
-    page_text = ""
-    for page in pdf_reader.pages:
-        page_text += page.extract_text()
-    # split the text into chunks
-    text_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=chuck_size,
-        chunk_overlap=chuck_overlap,
-        length_function=len
-        )
-    chunks = text_splitter.split_text(text=page_text)
-    if chunks:
-        return chunks
-    else:
-        raise ValueError("Could not process text in PDF")
-
-# find or create the embeddings
-def get_embeddings(chunks, pdf):
-    store_name = pdf.name[:-4]
-    # check if vector store already exists
-    # if REUSE_PKL_STORE is True, then load the vector store from disk if it exists
-    reuse_pkl_store = os.getenv("REUSE_PKL_STORE")
-    if reuse_pkl_store == "True" and os.path.exists(f"{store_name}.pkl"):
-        with open(f"{store_name}.pkl", "rb") as f:
-            vector_store = pickle.load(f)
-        st.write("Embeddings loaded from disk")
-    #else create embeddings and save to disk
-    else:
-        embeddings = OpenAIEmbeddings()
-        # create vector store to hold the embeddings
-        vector_store = FAISS.from_texts(chunks, embedding=embeddings)
-        # save the vector store to disk
-        with open(f"{store_name}.pkl", "wb") as f:
-            pickle.dump(vector_store, f)
-        st.write("Embeddings saved to disk")
-    if vector_store is not None:
-        return vector_store
-    else:
-        raise ValueError("Issue creating and saving vector store")
-# retrieve the docs related to the question
-def retrieve_docs(question, vector_store):
-    docs = vector_store.similarity_search(question, k=3)
+def retrieve_docs(question, embeddings):
+    docs = embeddings.similarity_search(question, k=3)
     if len(docs) == 0:
         raise Exception("No documents found")
     else:
         return docs
 
-# generate the response
 def generate_response(docs, question):
     llm = ChatOpenAI(temperature=0.0, max_tokens=1000, model_name="gpt-3.5-turbo")
     chain = load_qa_chain(llm=llm, chain_type="stuff")
@@ -116,10 +73,30 @@ def generate_response(docs, question):
         print(cb)
     return response
 
+# Function to process user question and provide a response
+def process_question(question, embeddings):
+    # Perform necessary operations with embeddings to generate a response
+    # Example: Find similar embeddings, use a pre-trained model, etc.
+    # For demonstration purposes, let's just return a dummy response
+    return "This is a dummy response to the question: '{}'".format(question)
 
 
+# Function to load embeddings from a pickle file
+def load_embeddings(file_path):
+    with open(file_path, "rb") as f:
+        embeddings = pickle.load(f)
+    return embeddings
 
-
-
-if __name__ == '__main__':
+# Function to get embeddings
+def get_embeddings():
+    embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
+    if os.path.exists(embeddings_path):
+        embeddings = load_embeddings(embeddings_path)
+        st.write("Embeddings loaded successfully!")
+        return embeddings
+    else:
+        st.error("Embeddings file not found!")
+        return None
+    
+if __name__ == "__main__":
     main()
