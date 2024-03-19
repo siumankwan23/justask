@@ -89,7 +89,9 @@ def load_embeddings(file_path):
 
 # Function to get embeddings
 def get_embeddings():
-    embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
+    root_dir = os.path.dirname(__file__)
+    embeddings_path = os.path.join(root_dir, "s_embeddings.pkl")
+    #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
     if os.path.exists(embeddings_path):
         embeddings = load_embeddings(embeddings_path)
         st.write("Embeddings loaded successfully!")
