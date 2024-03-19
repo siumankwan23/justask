@@ -96,6 +96,7 @@ def get_embeddings():
         return embeddings
     else:
         st.error("Embeddings file not found!")
+        st.write(embeddings_path)
         return None
     
 if __name__ == "__main__":
