@@ -80,23 +80,28 @@ def process_question(question, embeddings):
     # For demonstration purposes, let's just return a dummy response
     return "This is a dummy response to the question: '{}'".format(question)
 
+# Function to get embeddings
+def get_embeddings():
+    root_dir = os.path.dirname(__file__)
+    embeddings_path = os.path.join(root_dir, "s_embeddings.pkl")
+    st.write(embeddings_path)
+    st.write(embeddings_path)
+    #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
+    if os.path.exists(embeddings_path):
+        embeddings = load_embeddings(embeddings_path)
+        
+        st.write("Embeddings loaded successfully!")
+        return embeddings
+    else:
+        st.error("Embeddings file not found!")
+        st.write(embeddings_path)
+        return None
 
 # Function to load embeddings from a pickle file
 def load_embeddings(file_path):
     with open(file_path, "rb") as f:
         embeddings = pickle.load(f)
     return embeddings
-
-# Function to get embeddings
-def get_embeddings():
-    embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
-    if os.path.exists(embeddings_path):
-        embeddings = load_embeddings(embeddings_path)
-        st.write("Embeddings loaded successfully!")
-        return embeddings
-    else:
-        st.error("Embeddings file not found!")
-        return None
     
 if __name__ == "__main__":
     main()
