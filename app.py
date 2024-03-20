@@ -33,7 +33,7 @@ with st.sidebar:
 
 # Main function
 def main():
-
+    print("Current working directory:", os.getcwd())
     files = os.listdir("../src/")
     for file in files:
         st.write(file)
