@@ -90,6 +90,7 @@ def get_embeddings():
     st.write(embeddings_path)
     #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
     if os.path.exists(embeddings_path):
+        st.write("Embeddings loaded successfully!!")
         embeddings = load_embeddings(embeddings_path)
         st.write("Embeddings loaded successfully!")
         return embeddings
