@@ -34,7 +34,7 @@ with st.sidebar:
 # Main function
 def main():
 
-    files = os.listdir("mount/src/")
+    files = os.listdir("./src/")
     for file in files:
         st.write(file)
         
