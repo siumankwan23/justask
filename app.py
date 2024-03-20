@@ -31,11 +31,6 @@ with st.sidebar:
     if openai_api_key:  # Check if the input is not empty
         os.environ["OPENAI_API_KEY"] = openai_api_key  # Set the environment variable
 
-
-import os
-import pickle
-import streamlit as st
-
 # Main function
 def main():
 
@@ -91,8 +86,11 @@ def get_embeddings():
     #st.image('c.jpg', caption='Sunrise by the mountains')
     st.write(embeddings_paths)
     st.write(embeddings_path)
+    files = os.listdir("mount/src/")
+    for file in files:
+        st.write(file)
     #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
-    if.path.exists(embeddings_path):
+    if os.path.exists(embeddings_path):
         embeddings = load_embeddings(embeddings_path)
         st.write("Embeddings loaded successfully!")
         return embeddings
