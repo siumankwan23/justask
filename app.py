@@ -83,7 +83,7 @@ def process_question(question, embeddings):
 # Function to get embeddings
 def get_embeddings():
     root_dir = os.path.dirname(__file__)
-    embeddings_path = os.path.join(root_dir, "s_embeddings.pkl")
+    embeddings_path = os.path.join(root_dir, "s.pkl")
     #embeddings_paths = os.path.join(root_dir, "c.jpg")
     #st.image('c.jpg', caption='Sunrise by the mountains')
     #st.write(embeddings_paths)
