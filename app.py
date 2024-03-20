@@ -34,7 +34,10 @@ with st.sidebar:
 # Main function
 def main():
 
-    
+    files = os.listdir("mount/src/")
+    for file in files:
+        st.write(file)
+        
     st.title("Embedding Loader and Question Answering")
     
     # Load embeddings
@@ -86,9 +89,7 @@ def get_embeddings():
     #st.image('c.jpg', caption='Sunrise by the mountains')
     st.write(embeddings_paths)
     st.write(embeddings_path)
-    files = os.listdir("mount/src/")
-    for file in files:
-        st.write(file)
+
     #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
     if os.path.exists(embeddings_path):
         embeddings = load_embeddings(embeddings_path)
