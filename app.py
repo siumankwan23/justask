@@ -84,13 +84,13 @@ def process_question(question, embeddings):
 def get_embeddings():
     root_dir = os.path.dirname(__file__)
     embeddings_path = os.path.join(root_dir, "s_embeddings.pkl")
+    embeddings_paths = os.path.join(root_dir, "c.jpg")
     st.image('c.jpg', caption='Sunrise by the mountains')
-    st.write(embeddings_path)
+    st.write(embeddings_paths)
     st.write(embeddings_path)
     #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
     if os.path.exists(embeddings_path):
         embeddings = load_embeddings(embeddings_path)
-        
         st.write("Embeddings loaded successfully!")
         return embeddings
     else:
