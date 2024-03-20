@@ -38,6 +38,8 @@ import streamlit as st
 
 # Main function
 def main():
+
+    
     st.title("Embedding Loader and Question Answering")
     
     # Load embeddings
@@ -76,7 +78,7 @@ def generate_response(docs, question):
 # Function to process user question and provide a response
 def process_question(question, embeddings):
     # Perform necessary operations with embeddings to generate a response
-    # Example: Find similar embeddings, use a pre-trained model, etc.
+    # Example: Find similar embeddosings, use a pre-trained model, etc.
     # For demonstration purposes, let's just return a dummy response
     return "This is a dummy response to the question: '{}'".format(question)
 
@@ -90,7 +92,7 @@ def get_embeddings():
     st.write(embeddings_paths)
     st.write(embeddings_path)
     #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
-    if os.path.exists(embeddings_path):
+    if.path.exists(embeddings_path):
         embeddings = load_embeddings(embeddings_path)
         st.write("Embeddings loaded successfully!")
         return embeddings
