@@ -31,13 +31,13 @@ with st.sidebar:
     if openai_api_key:  # Check if the input is not empty
         os.environ["OPENAI_API_KEY"] = openai_api_key  # Set the environment variable
 
-
-import os
-import pickle
-import streamlit as st
-
 # Main function
 def main():
+    print("Current working directory:", os.getcwd())
+    files = os.listdir("../src/")
+    for file in files:
+        st.write(file)
+        
     st.title("Embedding Loader and Question Answering")
     
     # Load embeddings
@@ -76,7 +76,7 @@ def generate_response(docs, question):
 # Function to process user question and provide a response
 def process_question(question, embeddings):
     # Perform necessary operations with embeddings to generate a response
-    # Example: Find similar embeddings, use a pre-trained model, etc.
+    # Example: Find similar embeddosings, use a pre-trained model, etc.
     # For demonstration purposes, let's just return a dummy response
     return "This is a dummy response to the question: '{}'".format(question)
 
@@ -89,6 +89,7 @@ def get_embeddings():
     #st.image('c.jpg', caption='Sunrise by the mountains')
     st.write(embeddings_paths)
     st.write(embeddings_path)
+
     #embeddings_path = "s_embeddings.pkl"  # Path to your embeddings file
     if os.path.exists(embeddings_path):
         embeddings = load_embeddings(embeddings_path)
